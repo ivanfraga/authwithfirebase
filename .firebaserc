@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "appweb-bcd38": {
+      "hosting": {
+        "app": [
+          "appweb-bcd38"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "appweb-bcd38"
+  }
+}
