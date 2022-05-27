@@ -1,37 +1,38 @@
 import { Injectable } from '@angular/core';
-import {Auth, signInWithEmailAndPassword, signOut} from '@angular/fire/auth'
-import { createUserWithEmailAndPassword } from '@firebase/auth';
+// importamos lo que necesitamos para el login con firebase 
+import {Auth,signInWithEmailAndPassword,createUserWithEmailAndPassword,signOut} from '@angular/fire/auth';
+import { create } from 'domain';
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
-  constructor(private auth: Auth) { }
-
-  async register (email, password){
-    try{
+// servicio del login con firebase 
+  constructor(private auth:Auth) { }
+// registrase 
+  async register({email,password}){
+    try {
       const user = await createUserWithEmailAndPassword(
-        this.auth,
-        email,
-        password
-      )
-    } catch(e){
-      return null;
-    }
-  }
-  async login(){
-    try{
-      const user = await signInWithEmailAndPassword(
-        this.auth,
-        email,
-        password
-      );
-      return user;
-    } catch(e){
-      return null;
-    }
-  }
+        // los parametro que debo enviar
+        this.auth,email,password
 
+      );
+    } catch (error) {
+      return  null;
+      
+    }
+
+  }
+// inicar sesion 
+  async login(email,password){
+    const user = await signInWithEmailAndPassword(
+      this.auth,email,password
+    );
+    return user;
+  
+  }
+// salir 
   logout(){
     return signOut(this.auth)
   }

@@ -1,23 +1,27 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import {redirectUnauthorizedTo, redirectLoggedInTo, canActivate} from '@angular/fire/auth-guard'
 
-const redirectUnauthorizedToLogin= ()=> redirectUnauthorizedTo(['']);
-const redirectLoggedInToHome=()=>redirectLoggedInTo(['home'])
+
+import {redirectUnauthorizedTo, redirectLoggedInTo,canActivate} from '@angular/fire/auth-guard';
+const redirectUnauthorizedToLogin =()=> redirectUnauthorizedTo(['']);
+const redirectUnauthorizedToHome =()=> redirectLoggedInTo(['home']);
+
+
 const routes: Routes = [
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
-    ...canActivate
-  },
-  {
     path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule),
+    ...canActivate(redirectUnauthorizedToHome)
   },
   {
-    path: 'login',
-    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+    path: 'home',
+    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule),
+    ...canActivate(redirectUnauthorizedToLogin)
+  },
+  {
+    path: '*',
+    redirectTo: '',
+    pathMatch: 'full'
   },
 ];
 
